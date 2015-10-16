@@ -1,0 +1,761 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MrSparklyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="employeeID" />
+          </Key>
+          <Property Name="employeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employeeFirstName" Type="nvarchar" MaxLength="25" />
+          <Property Name="employeeLastName" Type="nvarchar" MaxLength="25" />
+          <Property Name="employeeStreet" Type="nvarchar" MaxLength="30" />
+          <Property Name="employeePhone" Type="nvarchar" MaxLength="12" />
+          <Property Name="employeeMob" Type="nvarchar" MaxLength="12" />
+          <Property Name="employeeFax" Type="nvarchar" MaxLength="12" />
+          <Property Name="employeeEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="employeeDepartment" Type="nvarchar" MaxLength="20" />
+          <Property Name="employeeUsername" Type="nvarchar" MaxLength="25" />
+          <Property Name="employeePassword" Type="nvarchar" MaxLength="120" />
+          <Property Name="suburbID" Type="int" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productBrandName" Type="nvarchar" MaxLength="25" />
+          <Property Name="productCostPrice" Type="money" />
+          <Property Name="productRetailPrice" Type="money" />
+          <Property Name="productQty" Type="smallint" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderLines">
+          <Key>
+            <PropertyRef Name="purchaseOrderLinesID" />
+          </Key>
+          <Property Name="purchaseOrderLinesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="purchaseOrderID" Type="int" />
+          <Property Name="rawMaterialsID" Type="int" />
+          <Property Name="purchaseOrderItemQty" Type="smallint" />
+          <Property Name="purchaseOrderItemPrice" Type="money" />
+          <Property Name="purchaseOrderLineSubtotal" Type="money" />
+        </EntityType>
+        <EntityType Name="PurchaseOrders">
+          <Key>
+            <PropertyRef Name="purchaseOrderID" />
+          </Key>
+          <Property Name="purchaseOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supplierID" Type="int" />
+          <Property Name="purchaseOrderNo" Type="nvarchar" MaxLength="15" />
+          <Property Name="purchaseOrderDate" Type="datetime2" Precision="0" />
+          <Property Name="deliveryAddress" Type="nvarchar" MaxLength="75" />
+        </EntityType>
+        <EntityType Name="RawMaterials">
+          <Key>
+            <PropertyRef Name="rawMaterialsID" />
+          </Key>
+          <Property Name="rawMaterialsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rawMaterialsName" Type="nvarchar" MaxLength="30" />
+          <Property Name="rawMaterialsPrice" Type="money" />
+          <Property Name="rawMaterialsQty" Type="smallint" />
+        </EntityType>
+        <EntityType Name="Retailers">
+          <Key>
+            <PropertyRef Name="retailerID" />
+          </Key>
+          <Property Name="retailerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employeeID" Type="int" />
+          <Property Name="retailerName" Type="nvarchar" MaxLength="25" />
+          <Property Name="retailerContactName" Type="nvarchar" MaxLength="50" />
+          <Property Name="retailerStreet" Type="nvarchar" MaxLength="30" />
+          <Property Name="retailerPhone" Type="nvarchar" MaxLength="12" />
+          <Property Name="retailerMob" Type="nvarchar" MaxLength="12" />
+          <Property Name="retailerFax" Type="nvarchar" MaxLength="12" />
+          <Property Name="retailerEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="suburbID" Type="int" />
+        </EntityType>
+        <EntityType Name="SalesOrderLines">
+          <Key>
+            <PropertyRef Name="salesOrderLinesID" />
+          </Key>
+          <Property Name="salesOrderLinesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="salesOrderID" Type="int" />
+          <Property Name="productID" Type="int" />
+          <Property Name="salesOrderItemQty" Type="smallint" />
+          <Property Name="salesOrderItemPrice" Type="money" />
+          <Property Name="salesOrderLinesSubtotal" Type="money" />
+        </EntityType>
+        <EntityType Name="SalesOrders">
+          <Key>
+            <PropertyRef Name="salesOrderID" />
+          </Key>
+          <Property Name="salesOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="retailerID" Type="int" />
+          <Property Name="salesOrderNo" Type="nvarchar" MaxLength="15" />
+          <Property Name="salesOrderDate" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="Suburb">
+          <Key>
+            <PropertyRef Name="suburbID" />
+          </Key>
+          <Property Name="suburbID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="suburb" Type="nvarchar" MaxLength="50" />
+          <Property Name="state" Type="nvarchar" MaxLength="3" />
+          <Property Name="zip" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="supplierID" />
+          </Key>
+          <Property Name="supplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supplierName" Type="nvarchar" MaxLength="30" />
+          <Property Name="contactName" Type="nvarchar" MaxLength="30" />
+          <Property Name="supplierStreet" Type="nvarchar" MaxLength="30" />
+          <Property Name="supplierPhone" Type="nvarchar" MaxLength="12" />
+          <Property Name="supplierMobile" Type="nvarchar" MaxLength="12" />
+          <Property Name="supplierFax" Type="nvarchar" MaxLength="12" />
+          <Property Name="supplierEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="suburbID" Type="int" />
+        </EntityType>
+        <Association Name="Employees$SuburbEmployees">
+          <End Role="Suburb" Type="Self.Suburb" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suburb">
+              <PropertyRef Name="suburbID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="suburbID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderLines$PurchaseOrdersPurchaseOrderLines">
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="0..1" />
+          <End Role="PurchaseOrderLines" Type="Self.PurchaseOrderLines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrders">
+              <PropertyRef Name="purchaseOrderID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderLines">
+              <PropertyRef Name="purchaseOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderLines$RawMaterialsPurchaseOrderLines">
+          <End Role="RawMaterials" Type="Self.RawMaterials" Multiplicity="0..1" />
+          <End Role="PurchaseOrderLines" Type="Self.PurchaseOrderLines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RawMaterials">
+              <PropertyRef Name="rawMaterialsID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderLines">
+              <PropertyRef Name="rawMaterialsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrders$SuppliersPurchaseOrders">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="supplierID" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="supplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Retailers$EmployeesRetailers">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Retailers" Type="Self.Retailers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="employeeID" />
+            </Principal>
+            <Dependent Role="Retailers">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Retailers$SuburbRetailers">
+          <End Role="Suburb" Type="Self.Suburb" Multiplicity="0..1" />
+          <End Role="Retailers" Type="Self.Retailers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suburb">
+              <PropertyRef Name="suburbID" />
+            </Principal>
+            <Dependent Role="Retailers">
+              <PropertyRef Name="suburbID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SalesOrderLines$ProductsSalesOrderLines">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="SalesOrderLines" Type="Self.SalesOrderLines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="SalesOrderLines">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SalesOrderLines$SalesOrdersSalesOrderLines">
+          <End Role="SalesOrders" Type="Self.SalesOrders" Multiplicity="0..1" />
+          <End Role="SalesOrderLines" Type="Self.SalesOrderLines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrders">
+              <PropertyRef Name="salesOrderID" />
+            </Principal>
+            <Dependent Role="SalesOrderLines">
+              <PropertyRef Name="salesOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SalesOrders$RetailersSalesOrders">
+          <End Role="Retailers" Type="Self.Retailers" Multiplicity="0..1" />
+          <End Role="SalesOrders" Type="Self.SalesOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retailers">
+              <PropertyRef Name="retailerID" />
+            </Principal>
+            <Dependent Role="SalesOrders">
+              <PropertyRef Name="retailerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Suppliers$SuburbSuppliers">
+          <End Role="Suburb" Type="Self.Suburb" Multiplicity="0..1" />
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suburb">
+              <PropertyRef Name="suburbID" />
+            </Principal>
+            <Dependent Role="Suppliers">
+              <PropertyRef Name="suburbID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MrSparklyModelStoreContainer">
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrderLines" EntityType="Self.PurchaseOrderLines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RawMaterials" EntityType="Self.RawMaterials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Retailers" EntityType="Self.Retailers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalesOrderLines" EntityType="Self.SalesOrderLines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalesOrders" EntityType="Self.SalesOrders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suburb" EntityType="Self.Suburb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Employees$SuburbEmployees" Association="Self.Employees$SuburbEmployees">
+            <End Role="Suburb" EntitySet="Suburb" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderLines$PurchaseOrdersPurchaseOrderLines" Association="Self.PurchaseOrderLines$PurchaseOrdersPurchaseOrderLines">
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseOrderLines" EntitySet="PurchaseOrderLines" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderLines$RawMaterialsPurchaseOrderLines" Association="Self.PurchaseOrderLines$RawMaterialsPurchaseOrderLines">
+            <End Role="RawMaterials" EntitySet="RawMaterials" />
+            <End Role="PurchaseOrderLines" EntitySet="PurchaseOrderLines" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrders$SuppliersPurchaseOrders" Association="Self.PurchaseOrders$SuppliersPurchaseOrders">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="Retailers$EmployeesRetailers" Association="Self.Retailers$EmployeesRetailers">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Retailers" EntitySet="Retailers" />
+          </AssociationSet>
+          <AssociationSet Name="Retailers$SuburbRetailers" Association="Self.Retailers$SuburbRetailers">
+            <End Role="Suburb" EntitySet="Suburb" />
+            <End Role="Retailers" EntitySet="Retailers" />
+          </AssociationSet>
+          <AssociationSet Name="SalesOrderLines$ProductsSalesOrderLines" Association="Self.SalesOrderLines$ProductsSalesOrderLines">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="SalesOrderLines" EntitySet="SalesOrderLines" />
+          </AssociationSet>
+          <AssociationSet Name="SalesOrderLines$SalesOrdersSalesOrderLines" Association="Self.SalesOrderLines$SalesOrdersSalesOrderLines">
+            <End Role="SalesOrders" EntitySet="SalesOrders" />
+            <End Role="SalesOrderLines" EntitySet="SalesOrderLines" />
+          </AssociationSet>
+          <AssociationSet Name="SalesOrders$RetailersSalesOrders" Association="Self.SalesOrders$RetailersSalesOrders">
+            <End Role="Retailers" EntitySet="Retailers" />
+            <End Role="SalesOrders" EntitySet="SalesOrders" />
+          </AssociationSet>
+          <AssociationSet Name="Suppliers$SuburbSuppliers" Association="Self.Suppliers$SuburbSuppliers">
+            <End Role="Suburb" EntitySet="Suburb" />
+            <End Role="Suppliers" EntitySet="Suppliers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MrSparklyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employeeID" />
+          </Key>
+          <Property Name="employeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employeeFirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="employeeLastName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="employeeStreet" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="employeePhone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="employeeMob" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="employeeFax" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="employeeEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="employeeDepartment" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="employeeUsername" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="employeePassword" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="suburbID" Type="Int32" />
+          <NavigationProperty Name="Suburb" Relationship="Self.Employees_SuburbEmployees" FromRole="Employees" ToRole="Suburb" />
+          <NavigationProperty Name="Retailers" Relationship="Self.Retailers_EmployeesRetailers" FromRole="Employees" ToRole="Retailers" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productBrandName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="productCostPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="productRetailPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="productQty" Type="Int16" />
+          <NavigationProperty Name="SalesOrderLines" Relationship="Self.SalesOrderLines_ProductsSalesOrderLines" FromRole="Products" ToRole="SalesOrderLines" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderLine">
+          <Key>
+            <PropertyRef Name="purchaseOrderLinesID" />
+          </Key>
+          <Property Name="purchaseOrderLinesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="purchaseOrderID" Type="Int32" />
+          <Property Name="rawMaterialsID" Type="Int32" />
+          <Property Name="purchaseOrderItemQty" Type="Int16" />
+          <Property Name="purchaseOrderItemPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="purchaseOrderLineSubtotal" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.PurchaseOrderLines_PurchaseOrdersPurchaseOrderLines" FromRole="PurchaseOrderLines" ToRole="PurchaseOrders" />
+          <NavigationProperty Name="RawMaterial" Relationship="Self.PurchaseOrderLines_RawMaterialsPurchaseOrderLines" FromRole="PurchaseOrderLines" ToRole="RawMaterials" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="purchaseOrderID" />
+          </Key>
+          <Property Name="purchaseOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplierID" Type="Int32" />
+          <Property Name="purchaseOrderNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="purchaseOrderDate" Type="DateTime" Precision="0" />
+          <Property Name="deliveryAddress" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PurchaseOrderLines" Relationship="Self.PurchaseOrderLines_PurchaseOrdersPurchaseOrderLines" FromRole="PurchaseOrders" ToRole="PurchaseOrderLines" />
+          <NavigationProperty Name="Supplier" Relationship="Self.PurchaseOrders_SuppliersPurchaseOrders" FromRole="PurchaseOrders" ToRole="Suppliers" />
+        </EntityType>
+        <EntityType Name="RawMaterial">
+          <Key>
+            <PropertyRef Name="rawMaterialsID" />
+          </Key>
+          <Property Name="rawMaterialsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rawMaterialsName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="rawMaterialsPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="rawMaterialsQty" Type="Int16" />
+          <NavigationProperty Name="PurchaseOrderLines" Relationship="Self.PurchaseOrderLines_RawMaterialsPurchaseOrderLines" FromRole="RawMaterials" ToRole="PurchaseOrderLines" />
+        </EntityType>
+        <EntityType Name="Retailer">
+          <Key>
+            <PropertyRef Name="retailerID" />
+          </Key>
+          <Property Name="retailerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employeeID" Type="Int32" />
+          <Property Name="retailerName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="retailerContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="retailerStreet" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="retailerPhone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="retailerMob" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="retailerFax" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="retailerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="suburbID" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Self.Retailers_EmployeesRetailers" FromRole="Retailers" ToRole="Employees" />
+          <NavigationProperty Name="Suburb" Relationship="Self.Retailers_SuburbRetailers" FromRole="Retailers" ToRole="Suburb" />
+          <NavigationProperty Name="SalesOrders" Relationship="Self.SalesOrders_RetailersSalesOrders" FromRole="Retailers" ToRole="SalesOrders" />
+        </EntityType>
+        <EntityType Name="SalesOrderLine">
+          <Key>
+            <PropertyRef Name="salesOrderLinesID" />
+          </Key>
+          <Property Name="salesOrderLinesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="salesOrderID" Type="Int32" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="salesOrderItemQty" Type="Int16" />
+          <Property Name="salesOrderItemPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="salesOrderLinesSubtotal" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Product" Relationship="Self.SalesOrderLines_ProductsSalesOrderLines" FromRole="SalesOrderLines" ToRole="Products" />
+          <NavigationProperty Name="SalesOrder" Relationship="Self.SalesOrderLines_SalesOrdersSalesOrderLines" FromRole="SalesOrderLines" ToRole="SalesOrders" />
+        </EntityType>
+        <EntityType Name="SalesOrder">
+          <Key>
+            <PropertyRef Name="salesOrderID" />
+          </Key>
+          <Property Name="salesOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="retailerID" Type="Int32" />
+          <Property Name="salesOrderNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="salesOrderDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Retailer" Relationship="Self.SalesOrders_RetailersSalesOrders" FromRole="SalesOrders" ToRole="Retailers" />
+          <NavigationProperty Name="SalesOrderLines" Relationship="Self.SalesOrderLines_SalesOrdersSalesOrderLines" FromRole="SalesOrders" ToRole="SalesOrderLines" />
+        </EntityType>
+        <EntityType Name="Suburb">
+          <Key>
+            <PropertyRef Name="suburbID" />
+          </Key>
+          <Property Name="suburbID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="suburb1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="state" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="zip" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="Self.Employees_SuburbEmployees" FromRole="Suburb" ToRole="Employees" />
+          <NavigationProperty Name="Retailers" Relationship="Self.Retailers_SuburbRetailers" FromRole="Suburb" ToRole="Retailers" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.Suppliers_SuburbSuppliers" FromRole="Suburb" ToRole="Suppliers" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="supplierID" />
+          </Key>
+          <Property Name="supplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplierName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="contactName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="supplierStreet" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="supplierPhone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="supplierMobile" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="supplierFax" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="supplierEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="suburbID" Type="Int32" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.PurchaseOrders_SuppliersPurchaseOrders" FromRole="Suppliers" ToRole="PurchaseOrders" />
+          <NavigationProperty Name="Suburb" Relationship="Self.Suppliers_SuburbSuppliers" FromRole="Suppliers" ToRole="Suburb" />
+        </EntityType>
+        <Association Name="Employees_SuburbEmployees">
+          <End Role="Suburb" Type="Self.Suburb" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suburb">
+              <PropertyRef Name="suburbID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="suburbID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Retailers_EmployeesRetailers">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Retailers" Type="Self.Retailer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="employeeID" />
+            </Principal>
+            <Dependent Role="Retailers">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SalesOrderLines_ProductsSalesOrderLines">
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="SalesOrderLines" Type="Self.SalesOrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="SalesOrderLines">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderLines_PurchaseOrdersPurchaseOrderLines">
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+          <End Role="PurchaseOrderLines" Type="Self.PurchaseOrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrders">
+              <PropertyRef Name="purchaseOrderID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderLines">
+              <PropertyRef Name="purchaseOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrderLines_RawMaterialsPurchaseOrderLines">
+          <End Role="RawMaterials" Type="Self.RawMaterial" Multiplicity="0..1" />
+          <End Role="PurchaseOrderLines" Type="Self.PurchaseOrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RawMaterials">
+              <PropertyRef Name="rawMaterialsID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderLines">
+              <PropertyRef Name="rawMaterialsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseOrders_SuppliersPurchaseOrders">
+          <End Role="Suppliers" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="supplierID" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="supplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Retailers_SuburbRetailers">
+          <End Role="Suburb" Type="Self.Suburb" Multiplicity="0..1" />
+          <End Role="Retailers" Type="Self.Retailer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suburb">
+              <PropertyRef Name="suburbID" />
+            </Principal>
+            <Dependent Role="Retailers">
+              <PropertyRef Name="suburbID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SalesOrders_RetailersSalesOrders">
+          <End Role="Retailers" Type="Self.Retailer" Multiplicity="0..1" />
+          <End Role="SalesOrders" Type="Self.SalesOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retailers">
+              <PropertyRef Name="retailerID" />
+            </Principal>
+            <Dependent Role="SalesOrders">
+              <PropertyRef Name="retailerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SalesOrderLines_SalesOrdersSalesOrderLines">
+          <End Role="SalesOrders" Type="Self.SalesOrder" Multiplicity="0..1" />
+          <End Role="SalesOrderLines" Type="Self.SalesOrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrders">
+              <PropertyRef Name="salesOrderID" />
+            </Principal>
+            <Dependent Role="SalesOrderLines">
+              <PropertyRef Name="salesOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Suppliers_SuburbSuppliers">
+          <End Role="Suburb" Type="Self.Suburb" Multiplicity="0..1" />
+          <End Role="Suppliers" Type="Self.Supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suburb">
+              <PropertyRef Name="suburbID" />
+            </Principal>
+            <Dependent Role="Suppliers">
+              <PropertyRef Name="suburbID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MrSparklyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="PurchaseOrderLines" EntityType="Self.PurchaseOrderLine" />
+          <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
+          <EntitySet Name="RawMaterials" EntityType="Self.RawMaterial" />
+          <EntitySet Name="Retailers" EntityType="Self.Retailer" />
+          <EntitySet Name="SalesOrderLines" EntityType="Self.SalesOrderLine" />
+          <EntitySet Name="SalesOrders" EntityType="Self.SalesOrder" />
+          <EntitySet Name="Suburbs" EntityType="Self.Suburb" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <AssociationSet Name="Employees_SuburbEmployees" Association="Self.Employees_SuburbEmployees">
+            <End Role="Suburb" EntitySet="Suburbs" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Retailers_EmployeesRetailers" Association="Self.Retailers_EmployeesRetailers">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Retailers" EntitySet="Retailers" />
+          </AssociationSet>
+          <AssociationSet Name="SalesOrderLines_ProductsSalesOrderLines" Association="Self.SalesOrderLines_ProductsSalesOrderLines">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="SalesOrderLines" EntitySet="SalesOrderLines" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderLines_PurchaseOrdersPurchaseOrderLines" Association="Self.PurchaseOrderLines_PurchaseOrdersPurchaseOrderLines">
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseOrderLines" EntitySet="PurchaseOrderLines" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrderLines_RawMaterialsPurchaseOrderLines" Association="Self.PurchaseOrderLines_RawMaterialsPurchaseOrderLines">
+            <End Role="RawMaterials" EntitySet="RawMaterials" />
+            <End Role="PurchaseOrderLines" EntitySet="PurchaseOrderLines" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseOrders_SuppliersPurchaseOrders" Association="Self.PurchaseOrders_SuppliersPurchaseOrders">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="Retailers_SuburbRetailers" Association="Self.Retailers_SuburbRetailers">
+            <End Role="Suburb" EntitySet="Suburbs" />
+            <End Role="Retailers" EntitySet="Retailers" />
+          </AssociationSet>
+          <AssociationSet Name="SalesOrders_RetailersSalesOrders" Association="Self.SalesOrders_RetailersSalesOrders">
+            <End Role="Retailers" EntitySet="Retailers" />
+            <End Role="SalesOrders" EntitySet="SalesOrders" />
+          </AssociationSet>
+          <AssociationSet Name="SalesOrderLines_SalesOrdersSalesOrderLines" Association="Self.SalesOrderLines_SalesOrdersSalesOrderLines">
+            <End Role="SalesOrders" EntitySet="SalesOrders" />
+            <End Role="SalesOrderLines" EntitySet="SalesOrderLines" />
+          </AssociationSet>
+          <AssociationSet Name="Suppliers_SuburbSuppliers" Association="Self.Suppliers_SuburbSuppliers">
+            <End Role="Suburb" EntitySet="Suburbs" />
+            <End Role="Suppliers" EntitySet="Suppliers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MrSparklyModelStoreContainer" CdmEntityContainer="MrSparklyEntities">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="MrSparklyModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="employeeFirstName" ColumnName="employeeFirstName" />
+                <ScalarProperty Name="employeeLastName" ColumnName="employeeLastName" />
+                <ScalarProperty Name="employeeStreet" ColumnName="employeeStreet" />
+                <ScalarProperty Name="employeePhone" ColumnName="employeePhone" />
+                <ScalarProperty Name="employeeMob" ColumnName="employeeMob" />
+                <ScalarProperty Name="employeeFax" ColumnName="employeeFax" />
+                <ScalarProperty Name="employeeEmail" ColumnName="employeeEmail" />
+                <ScalarProperty Name="employeeDepartment" ColumnName="employeeDepartment" />
+                <ScalarProperty Name="employeeUsername" ColumnName="employeeUsername" />
+                <ScalarProperty Name="employeePassword" ColumnName="employeePassword" />
+                <ScalarProperty Name="suburbID" ColumnName="suburbID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="MrSparklyModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="productBrandName" ColumnName="productBrandName" />
+                <ScalarProperty Name="productCostPrice" ColumnName="productCostPrice" />
+                <ScalarProperty Name="productRetailPrice" ColumnName="productRetailPrice" />
+                <ScalarProperty Name="productQty" ColumnName="productQty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrderLines">
+            <EntityTypeMapping TypeName="MrSparklyModel.PurchaseOrderLine">
+              <MappingFragment StoreEntitySet="PurchaseOrderLines">
+                <ScalarProperty Name="purchaseOrderLinesID" ColumnName="purchaseOrderLinesID" />
+                <ScalarProperty Name="purchaseOrderID" ColumnName="purchaseOrderID" />
+                <ScalarProperty Name="rawMaterialsID" ColumnName="rawMaterialsID" />
+                <ScalarProperty Name="purchaseOrderItemQty" ColumnName="purchaseOrderItemQty" />
+                <ScalarProperty Name="purchaseOrderItemPrice" ColumnName="purchaseOrderItemPrice" />
+                <ScalarProperty Name="purchaseOrderLineSubtotal" ColumnName="purchaseOrderLineSubtotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrders">
+            <EntityTypeMapping TypeName="MrSparklyModel.PurchaseOrder">
+              <MappingFragment StoreEntitySet="PurchaseOrders">
+                <ScalarProperty Name="purchaseOrderID" ColumnName="purchaseOrderID" />
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="purchaseOrderNo" ColumnName="purchaseOrderNo" />
+                <ScalarProperty Name="purchaseOrderDate" ColumnName="purchaseOrderDate" />
+                <ScalarProperty Name="deliveryAddress" ColumnName="deliveryAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RawMaterials">
+            <EntityTypeMapping TypeName="MrSparklyModel.RawMaterial">
+              <MappingFragment StoreEntitySet="RawMaterials">
+                <ScalarProperty Name="rawMaterialsID" ColumnName="rawMaterialsID" />
+                <ScalarProperty Name="rawMaterialsName" ColumnName="rawMaterialsName" />
+                <ScalarProperty Name="rawMaterialsPrice" ColumnName="rawMaterialsPrice" />
+                <ScalarProperty Name="rawMaterialsQty" ColumnName="rawMaterialsQty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Retailers">
+            <EntityTypeMapping TypeName="MrSparklyModel.Retailer">
+              <MappingFragment StoreEntitySet="Retailers">
+                <ScalarProperty Name="retailerID" ColumnName="retailerID" />
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="retailerName" ColumnName="retailerName" />
+                <ScalarProperty Name="retailerContactName" ColumnName="retailerContactName" />
+                <ScalarProperty Name="retailerStreet" ColumnName="retailerStreet" />
+                <ScalarProperty Name="retailerPhone" ColumnName="retailerPhone" />
+                <ScalarProperty Name="retailerMob" ColumnName="retailerMob" />
+                <ScalarProperty Name="retailerFax" ColumnName="retailerFax" />
+                <ScalarProperty Name="retailerEmail" ColumnName="retailerEmail" />
+                <ScalarProperty Name="suburbID" ColumnName="suburbID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesOrderLines">
+            <EntityTypeMapping TypeName="MrSparklyModel.SalesOrderLine">
+              <MappingFragment StoreEntitySet="SalesOrderLines">
+                <ScalarProperty Name="salesOrderLinesID" ColumnName="salesOrderLinesID" />
+                <ScalarProperty Name="salesOrderID" ColumnName="salesOrderID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="salesOrderItemQty" ColumnName="salesOrderItemQty" />
+                <ScalarProperty Name="salesOrderItemPrice" ColumnName="salesOrderItemPrice" />
+                <ScalarProperty Name="salesOrderLinesSubtotal" ColumnName="salesOrderLinesSubtotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesOrders">
+            <EntityTypeMapping TypeName="MrSparklyModel.SalesOrder">
+              <MappingFragment StoreEntitySet="SalesOrders">
+                <ScalarProperty Name="salesOrderID" ColumnName="salesOrderID" />
+                <ScalarProperty Name="retailerID" ColumnName="retailerID" />
+                <ScalarProperty Name="salesOrderNo" ColumnName="salesOrderNo" />
+                <ScalarProperty Name="salesOrderDate" ColumnName="salesOrderDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suburbs">
+            <EntityTypeMapping TypeName="MrSparklyModel.Suburb">
+              <MappingFragment StoreEntitySet="Suburb">
+                <ScalarProperty Name="suburbID" ColumnName="suburbID" />
+                <ScalarProperty Name="suburb1" ColumnName="suburb" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="MrSparklyModel.Supplier">
+              <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="supplierName" ColumnName="supplierName" />
+                <ScalarProperty Name="contactName" ColumnName="contactName" />
+                <ScalarProperty Name="supplierStreet" ColumnName="supplierStreet" />
+                <ScalarProperty Name="supplierPhone" ColumnName="supplierPhone" />
+                <ScalarProperty Name="supplierMobile" ColumnName="supplierMobile" />
+                <ScalarProperty Name="supplierFax" ColumnName="supplierFax" />
+                <ScalarProperty Name="supplierEmail" ColumnName="supplierEmail" />
+                <ScalarProperty Name="suburbID" ColumnName="suburbID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

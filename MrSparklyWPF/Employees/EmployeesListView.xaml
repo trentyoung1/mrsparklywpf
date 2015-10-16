@@ -1,0 +1,291 @@
+﻿<UserControl x:Class="MrSparklyWPF.Employees.EmployeesListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:emp="clr-namespace:MrSparklyWPF.Employees"
+             xmlns:data= "clr-namespace:MrSparklyWPF.Models;assembly=MrSparklyWPF.Models"
+             xmlns:converters="clr-namespace:MrSparklyWPF.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.DataContext>
+        <emp:EmployeesListViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <converters:VisibilityToNullableBooleanConverter x:Key="VisibilityToNullableBooleanConverter"/>
+        <DataTemplate DataType="{x:Type data:Employee}">
+            <StackPanel>
+                <TextBlock Text="{Binding employeeFirstName}" />
+                <TextBlock Text="{Binding employeeLastName}" />
+                <TextBlock Text="{Binding employeeEmail}" />
+            </StackPanel>
+        </DataTemplate>
+        <Style x:Key="ToggleButtonStyle">
+            <Setter Property="ToggleButton.Content" Value="Edit" />
+            <Style.Triggers>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="ToggleButton.Content" Value="Hide"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="67*" />
+            <RowDefinition Height="293*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.4*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Name="TitleGrid" Grid.Row="0">
+            <TextBlock Text="Employees" FontSize="24" FontWeight="Bold" TextDecorations="{x:Null}" Margin="20,20,5,5" VerticalAlignment="Center" />
+        </Grid>
+        <Grid Name="ListGrid" Grid.Row="1" Margin="10,23,10,10">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" BorderThickness="0.5" BorderBrush="#FFACACAC" Margin="0" Template="{DynamicResource ScrollViewerControlTemplate1}" Padding="0">
+                <ScrollViewer.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionColorKey}}"/>
+                </ScrollViewer.Background>
+                <StackPanel Grid.Row="1">
+                    <DataGrid x:Name="Employeesgrid" ItemsSource="{Binding Employees}" AutoGenerateColumns="False"
+                  Grid.Row="1" Margin="10,20,10,0" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False" GridLinesVisibility="None" AlternationCount="1" BorderThickness="0" HorizontalAlignment="Center" Padding="0" ColumnWidth="100">
+                        <DataGrid.AlternatingRowBackground>
+                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientActiveCaptionColorKey}}"/>
+                        </DataGrid.AlternatingRowBackground>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="First Name" Binding="{Binding employeeFirstName}" />
+                            <DataGridTextColumn Header="Last Name" Binding="{Binding employeeLastName}" />
+                            <DataGridTextColumn Header="E-Mail" Binding="{Binding employeeEmail}" />
+                            <DataGridTextColumn Header="Depatment" Binding="{Binding employeeDepartment}" />
+                            <DataGridTextColumn Header="Phone" Binding="{Binding employeePhone}" />
+                            <DataGridTextColumn Header="Mobile" Binding="{Binding employeeMob}" />
+                            <DataGridTemplateColumn Width="Auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Delete"
+                                    Command="{Binding DataContext.DeleteEmployeeCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    CommandParameter="{Binding}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <Grid DataContext="{Binding SelectedItem, ElementName=Employeesgrid}">
+                                    <StackPanel>
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.3*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" Text="First Name:" Margin="5, 0 , 10, 0" VerticalAlignment="Center" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" Text="{Binding employeeFirstName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                            <TextBlock Grid.Row="1" Text="Last Name:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Text="{Binding employeeLastName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                                            <TextBlock Grid.Row="2" Text="Phone:" Margin="5, 0 , 20, 0" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Text="{Binding employeePhone, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                                            <TextBlock Grid.Row="3" Text="Department:" Margin="5, 0 , 20, 0" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Text="{Binding employeeDepartment, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                            <TextBlock Grid.Row="4" Text="Email:" Margin="5" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Text="{Binding employeeEmail, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                            <TextBlock Grid.Row="5" Text="Mobile:" Margin="5" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" Text="{Binding employeeMob, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                            <TextBlock Grid.Row="6" Text="Fax:" Margin="5" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Row="6" Grid.Column="1" Text="{Binding employeeFax, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                            <TextBlock Grid.Row="7" Text="Address:" Margin="5" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" Text="{Binding employeeStreet, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" TextWrapping="Wrap"/>
+                                            <TextBlock Grid.Row="8" Text="Suburb:" Margin="5" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Text="{Binding Suburb.suburb1, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                            <TextBlock Grid.Row="9" Text="State:" Margin="5" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Row="9" Grid.Column="1" Text="{Binding Suburb.state, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                            <TextBlock Grid.Row="10" Text="Post Code:" Margin="5" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Row="10" Grid.Column="1" Text="{Binding Suburb.zip, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                            <Button Grid.Row="11" Content="Save Changes"
+                                    Command="{Binding DataContext.UpdateEmployeeCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    CommandParameter="{Binding}" Margin="5,5,5,5" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                        <DataGrid.RowHeaderTemplate>
+                            <DataTemplate>
+                                <ToggleButton IsChecked="{Binding DetailsVisibility, Converter={StaticResource VisibilityToNullableBooleanConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
+                                          Style="{StaticResource ToggleButtonStyle}"/>
+                            </DataTemplate>
+                        </DataGrid.RowHeaderTemplate>
+                    </DataGrid>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <TabControl Grid.Row="1" Grid.Column="1" Margin="10,0,10,10" >
+        	<TabControl.Background>
+        		<SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionColorKey}}"/>
+        	</TabControl.Background>
+            <TabItem Header="Add New">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="First Name:" Margin="5, 0 ,20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding NewEmployee.employeeFirstName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                        <TextBlock Grid.Row="1" Text="Last Name:" Margin="5, 0 ,20 , 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding NewEmployee.employeeLastName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                        <TextBlock Grid.Row="2" Text="Phone:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding NewEmployee.employeePhone, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                        <TextBlock Grid.Row="3" Text="Department:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NewEmployee.employeeDepartment, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                        <TextBlock Grid.Row="4" Text="Email:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding NewEmployee.employeeEmail, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                        <TextBlock Grid.Row="5" Text="Mobile:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding NewEmployee.employeeMob, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                        <TextBlock Grid.Row="6" Text="Fax:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding NewEmployee.employeeFax, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                        <TextBlock Grid.Row="7" Text="Address:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding NewEmployee.employeeStreet, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="8" Text="Suburb:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <ComboBox Grid.Row="8" Grid.Column="1" ItemsSource="{Binding Suburbs}" DisplayMemberPath="suburb1"  SelectedValuePath="suburbID" SelectedValue="{Binding Path=NewEmployee.suburbID}" Margin="5" Width="150"/>
+                        <TextBlock Grid.Row="9" Text="State:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding NewEmployee.Suburb.state, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                        <TextBlock Grid.Row="10" Text="Post Code:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding NewEmployee.Suburb.zip, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                        <Button Grid.Row="11" Content="Add Employee"
+                            Command="{Binding DataContext.AddEmployeeCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"
+                                CommandParameter="{Binding NewEmployee}" Margin="5,5,5,5" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Find">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="5*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                        <TextBlock Text="Employee Name: " Margin="5,5,5,5" VerticalAlignment="Center"/>
+                        <TextBox Name="txtSearchBox" Margin="5,5,5,5" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Button Margin="5,5,5,5" Width="50" Content="Find"
+                                Command="{Binding DataContext.FindEmployeesCommand, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"
+                                CommandParameter="{Binding Path=Text, ElementName=txtSearchBox}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Grid.Row="1">
+                            <DataGrid Name="Foundgrid" ItemsSource="{Binding SearchResults}" AutoGenerateColumns="False"
+                  Grid.Row="1" Margin="20, 0, 10, 10" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False">
+                                <DataGrid.Columns>                                    
+                                    <DataGridTextColumn Header="First Name" Binding="{Binding employeeFirstName}" />
+                                    <DataGridTextColumn Header="Last Name" Binding="{Binding employeeLastName}" />
+                                    <DataGridTextColumn Header="E-Mail" Binding="{Binding employeeEmail}" />
+                                    <DataGridTextColumn Header="Depatment" Binding="{Binding employeeDepartment}" />
+                                    <DataGridTemplateColumn Width="Auto">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Delete"
+                                    Command="{Binding DataContext.DeleteEmployeeCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    CommandParameter="{Binding}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                                <DataGrid.RowDetailsTemplate>
+                                    <DataTemplate>
+                                        <Grid DataContext="{Binding SelectedItem, ElementName=Foundgrid}">
+                                            <StackPanel>
+                                                <Grid >
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="0.3*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="First Name:" Margin="5, 0 , 10, 0" VerticalAlignment="Center" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" Text="{Binding employeeFirstName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                                    <TextBlock Grid.Row="1" Text="Last Name:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Text="{Binding employeeLastName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                                                    <TextBlock Grid.Row="2" Text="Phone:" Margin="5, 0 , 20, 0" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Text="{Binding employeePhone, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                                                    <TextBlock Grid.Row="3" Text="Department:" Margin="5, 0 , 20, 0" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Text="{Binding employeeDepartment, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                                    <TextBlock Grid.Row="4" Text="Email:" Margin="5" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Text="{Binding employeeEmail, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                                    <TextBlock Grid.Row="5" Text="Mobile:" Margin="5" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" Text="{Binding employeeMob, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                                    <TextBlock Grid.Row="6" Text="Fax:" Margin="5" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Row="6" Grid.Column="1" Text="{Binding employeeFax, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                                    <TextBlock Grid.Row="7" Text="Address:" Margin="5" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" Text="{Binding employeeStreet, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" TextWrapping="Wrap"/>
+                                                    <TextBlock Grid.Row="8" Text="Suburb:" Margin="5" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Text="{Binding Suburb.suburb1, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                                    <TextBlock Grid.Row="9" Text="State:" Margin="5" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Row="9" Grid.Column="1" Text="{Binding Suburb.state, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                                    <TextBlock Grid.Row="10" Text="Post Code:" Margin="5" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Row="10" Grid.Column="1" Text="{Binding Suburb.zip, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                                    <Button Grid.Row="11" Content="Save Changes"
+                                    Command="{Binding DataContext.UpdateEmployeeCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    CommandParameter="{Binding}" Margin="5,5,5,5" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGrid.RowDetailsTemplate>
+                                <DataGrid.RowHeaderTemplate>
+                                    <DataTemplate>
+                                        <ToggleButton IsChecked="{Binding Path=DetailsVisibility,
+                                RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}},
+                                Converter={StaticResource VisibilityToNullableBooleanConverter}}"
+                                          Style="{StaticResource ToggleButtonStyle}"/>
+                                    </DataTemplate>
+                                </DataGrid.RowHeaderTemplate>
+                            </DataGrid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

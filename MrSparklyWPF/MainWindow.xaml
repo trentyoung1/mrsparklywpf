@@ -1,0 +1,120 @@
+﻿<Window x:Class="MrSparklyWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Employees="clr-namespace:MrSparklyWPF.Employees"
+        xmlns:Products="clr-namespace:MrSparklyWPF.Products"
+        xmlns:PurchaseOrders="clr-namespace:MrSparklyWPF.PurchaseOrders"
+        xmlns:RawMaterials="clr-namespace:MrSparklyWPF.RawMaterials"
+        xmlns:Retailers="clr-namespace:MrSparklyWPF.Retailers"
+        xmlns:Suppliers="clr-namespace:MrSparklyWPF.Suppliers"
+        xmlns:local="clr-namespace:MrSparklyWPF"
+        Title="MainWindow" Height="720" Width="1280">
+    <Window.DataContext>
+        <local:MainWindowViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type Employees:EmployeesListViewModel}">
+            <Employees:EmployeesListView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Products:ProductsListViewModel}">
+            <Products:ProductsListView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type RawMaterials:RawMaterialsListViewModel}">
+            <RawMaterials:RawMaterialsListView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Retailers:RetailersListViewModel}">
+            <Retailers:RetailersListView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Suppliers:SuppliersListViewModel}">
+            <Suppliers:SuppliersListView />
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0.3*" />
+            <RowDefinition Height="6*" />
+        </Grid.RowDefinitions>
+        <Grid x:Name="NavBar" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Content="Employees"
+                    Command="{Binding NavCommand}"
+                    CommandParameter="employees"
+                    Grid.Column="0" >
+            	<Button.Background>
+            		<SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
+            	</Button.Background>
+            </Button>
+            <Button Content="Products"
+                    Command="{Binding NavCommand}"
+                    CommandParameter="products"
+                    Grid.Column="1">
+            	<Button.Background>
+            		<SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
+            	</Button.Background>
+            </Button>
+            <Button Content="Sales"
+                    Command="{Binding NavCommand}"
+                    CommandParameter="salesorders"
+                    Grid.Column="2" >
+                <Button.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="Purchasing"
+                    Command="{Binding NavCommand}"
+                    CommandParameter="purchaseorders"
+                    Grid.Column="3" >
+                <Button.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="Raw Materials"
+                    Command="{Binding NavCommand}"
+                    CommandParameter="rawmaterials"
+                    Grid.Column="4" >
+                <Button.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="Retailers"
+                    Command="{Binding NavCommand}"
+                    CommandParameter="retailers"
+                    Grid.Column="5" >
+                <Button.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="Suppliers"
+                    Command="{Binding NavCommand}"
+                    CommandParameter="suppliers"
+                    Grid.Column="6" >
+                <Button.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
+                </Button.Background>
+            </Button>
+        </Grid>
+        <Grid x:Name="Header" Grid.Row="0">
+        	<Grid.Background>
+        		<SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionColorKey}}"/>
+        	</Grid.Background>
+        	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="48" FontWeight="Bold" Margin="25,0,0,0"><Run Language="en-au" Text="Mr Sparkly"/></TextBlock>
+        </Grid>
+        <Grid x:Name="MainContent"
+              Grid.Row="2" Background="White">
+            <ContentControl Content="{Binding CurrentViewModel}" >
+            	<ContentControl.Background>
+            		<SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+            	</ContentControl.Background>
+            </ContentControl>
+        </Grid>
+    </Grid>
+</Window>
