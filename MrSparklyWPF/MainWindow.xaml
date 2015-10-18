@@ -28,6 +28,9 @@
         <DataTemplate DataType="{x:Type Suppliers:SuppliersListViewModel}">
             <Suppliers:SuppliersListView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type PurchaseOrders:PurchaseOrdersListViewModel}">
+            <PurchaseOrders:PurchaseOrdersListView />
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>

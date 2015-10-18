@@ -23,5 +23,10 @@ namespace MrSparklyWPF.PurchaseOrders
         {
             InitializeComponent();
         }
+
+        private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+
+        }
     }
 }
