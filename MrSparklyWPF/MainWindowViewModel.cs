@@ -5,6 +5,7 @@ using System.Text;
 using MrSparklyWPF.Employees;
 using MrSparklyWPF.Products;
 using MrSparklyWPF.PurchaseOrders;
+using MrSparklyWPF.SalesOrders;
 using MrSparklyWPF.ViewModels;
 using MrSparklyWPF.RawMaterials;
 using MrSparklyWPF.Retailers;
@@ -18,6 +19,7 @@ namespace MrSparklyWPF
         private EmployeesListViewModel _employeesListViewModel = new EmployeesListViewModel();
         private ProductsListViewModel _productsListViewModel = new ProductsListViewModel();
         private PurchaseOrdersListViewModel _purchaseOrdersListViewModel = new PurchaseOrdersListViewModel();
+        private SalesOrdersListViewModel _salesOrdersListViewModel = new SalesOrdersListViewModel();
         private RawMaterialsListViewModel _rawMaterialsListViewModel = new RawMaterialsListViewModel();
         private RetailersListViewModel _retailersListViewModel = new RetailersListViewModel();
         private SuppliersListViewModel _suppliersListViewModel = new SuppliersListViewModel();
@@ -44,6 +46,9 @@ namespace MrSparklyWPF
                     break;
                 case "purchaseorders":
                     CurrentViewModel = _purchaseOrdersListViewModel;
+                    break;
+                case "salesorders":
+                    CurrentViewModel = _salesOrdersListViewModel;
                     break;
                 case "rawmaterials":
                     CurrentViewModel = _rawMaterialsListViewModel;

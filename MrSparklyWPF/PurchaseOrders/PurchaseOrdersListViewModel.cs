@@ -113,6 +113,7 @@ namespace MrSparklyWPF.PurchaseOrders
             FindPurchaseOrdersCommand = new RelayCommand<string>(onFindPurchaseOrders);
 
             DeletePurchaseOrderLineCommand = new RelayCommand<PurchaseOrderLine>(onDeletePurchaseOrderLine);
+            DeleteNewPurchaseOrderLineCommand = new RelayCommand<PurchaseOrderLine>(onDeleteNewPurchaseOrderLine);
         }
 
         public RelayCommand<PurchaseOrder> DeletePurchaseOrderCommand { get; private set; }
@@ -123,6 +124,7 @@ namespace MrSparklyWPF.PurchaseOrders
         public RelayCommand<string> FindPurchaseOrdersCommand { get; private set; }
 
         public RelayCommand<PurchaseOrderLine> DeletePurchaseOrderLineCommand { get; private set; }
+        public RelayCommand<PurchaseOrderLine> DeleteNewPurchaseOrderLineCommand { get; private set; }
 
         public void onDeletePurchaseOrder(PurchaseOrder ord)
         {
@@ -217,6 +219,23 @@ namespace MrSparklyWPF.PurchaseOrders
                     db.PurchaseOrderLines.Remove(lineToRemove);
                     db.SaveChanges();
                     PurchaseOrders = UpdatePurchaseOrdersCollection(PurchaseOrders);
+                }
+            }
+        }
+
+        public void onDeleteNewPurchaseOrderLine(PurchaseOrderLine line)
+        {
+
+            if (line != null)
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure you wish to delete this item?", "Confirm Delete", System.Windows.MessageBoxButton.YesNo);
+
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    int purchaseOrderLineid = line.purchaseOrderLinesID;
+                    PurchaseOrderLine lineToRemove = (PurchaseOrderLine)NewPurchaseOrder.PurchaseOrderLines.Single(p => p.purchaseOrderLinesID == purchaseOrderLineid);
+
+                    NewPurchaseOrder.PurchaseOrderLines.Remove(lineToRemove);
                 }
             }
         }

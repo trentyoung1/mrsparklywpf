@@ -4,6 +4,7 @@
         xmlns:Employees="clr-namespace:MrSparklyWPF.Employees"
         xmlns:Products="clr-namespace:MrSparklyWPF.Products"
         xmlns:PurchaseOrders="clr-namespace:MrSparklyWPF.PurchaseOrders"
+        xmlns:SalesOrders="clr-namespace:MrSparklyWPF.SalesOrders"
         xmlns:RawMaterials="clr-namespace:MrSparklyWPF.RawMaterials"
         xmlns:Retailers="clr-namespace:MrSparklyWPF.Retailers"
         xmlns:Suppliers="clr-namespace:MrSparklyWPF.Suppliers"
@@ -30,6 +31,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type PurchaseOrders:PurchaseOrdersListViewModel}">
             <PurchaseOrders:PurchaseOrdersListView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type SalesOrders:SalesOrdersListViewModel}">
+            <SalesOrders:SalesOrdersListView />
         </DataTemplate>
     </Window.Resources>
     <Grid>

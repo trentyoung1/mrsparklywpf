@@ -1,23 +1,23 @@
-﻿<UserControl x:Class="MrSparklyWPF.PurchaseOrders.PurchaseOrdersListView"
+﻿<UserControl x:Class="MrSparklyWPF.SalesOrders.SalesOrdersListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:pur="clr-namespace:MrSparklyWPF.PurchaseOrders"
+             xmlns:sal="clr-namespace:MrSparklyWPF.SalesOrders"
              xmlns:data= "clr-namespace:MrSparklyWPF.Models;assembly=MrSparklyWPF.Models"
              xmlns:converters="clr-namespace:MrSparklyWPF.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280">
     <UserControl.DataContext>
-        <pur:PurchaseOrdersListViewModel />
+        <sal:SalesOrdersListViewModel />
     </UserControl.DataContext>
     <UserControl.Resources>
         <converters:VisibilityToNullableBooleanConverter x:Key="VisibilityToNullableBooleanConverter"/>
-        <DataTemplate DataType="{x:Type data:PurchaseOrder}">
+        <DataTemplate DataType="{x:Type data:SalesOrder}">
             <StackPanel>
-                <TextBlock Text="{Binding purchaseOrderNo}" />
-                <TextBlock Text="{Binding purchaseOrderDate}" />
-                <TextBlock Text="{Binding purchaseOrderEmail}" />
+                <TextBlock Text="{Binding salesOrderNo}" />
+                <TextBlock Text="{Binding salesOrderDate}" />
+                <TextBlock Text="{Binding salesOrderEmail}" />
             </StackPanel>
         </DataTemplate>
         <Style x:Key="ToggleButtonStyle">
@@ -39,7 +39,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Name="TitleGrid" Grid.Row="0">
-            <TextBlock Text="Purchase Orders" FontSize="24" FontWeight="Bold" TextDecorations="{x:Null}" Margin="20,20,5,5" VerticalAlignment="Center" />
+            <TextBlock Text="Sales Orders" FontSize="24" FontWeight="Bold" TextDecorations="{x:Null}" Margin="20,20,5,5" VerticalAlignment="Center" />
         </Grid>
         <Grid Name="ListGrid" Grid.Row="1" Margin="10,23,10,10">
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" BorderThickness="0.5" BorderBrush="#FFACACAC" Margin="0" Template="{DynamicResource ScrollViewerControlTemplate1}" Padding="0">
@@ -47,21 +47,20 @@
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionColorKey}}"/>
                 </ScrollViewer.Background>
                 <StackPanel Grid.Row="1">
-                    <DataGrid x:Name="PurchaseOrdersgrid" ItemsSource="{Binding PurchaseOrders}" AutoGenerateColumns="False"
+                    <DataGrid x:Name="SalesOrdersgrid" ItemsSource="{Binding SalesOrders}" AutoGenerateColumns="False"
                   Grid.Row="1" Margin="10,20,10,0" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False" GridLinesVisibility="None" AlternationCount="1" BorderThickness="0" HorizontalAlignment="Center" Padding="0" ColumnWidth="100">
                         <DataGrid.AlternatingRowBackground>
                             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientActiveCaptionColorKey}}"/>
                         </DataGrid.AlternatingRowBackground>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Order Number" Binding="{Binding purchaseOrderNo}" />
-                            <DataGridTextColumn Header="Order Date" Binding="{Binding purchaseOrderDate}" />
-                            <DataGridTextColumn Header="Supplier" Binding="{Binding Supplier.supplierName}" />
-                            <DataGridTextColumn Header="Delivery Address" Binding="{Binding deliveryAddress}" />
+                            <DataGridTextColumn Header="Order Number" Binding="{Binding salesOrderNo}" />
+                            <DataGridTextColumn Header="Order Date" Binding="{Binding salesOrderDate}" />
+                            <DataGridTextColumn Header="Retailer" Binding="{Binding Retailer.retailerName}" />
                             <DataGridTemplateColumn Width="Auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Content="View Details"
-                                    Command="{Binding DataContext.SelectPurchaseOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    Command="{Binding DataContext.SelectSalesOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     CommandParameter="{Binding}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -70,11 +69,11 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Content="Delete"
-                                    Command="{Binding DataContext.DeletePurchaseOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    Command="{Binding DataContext.DeleteSalesOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     CommandParameter="{Binding}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>                            
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -85,7 +84,7 @@
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionColorKey}}"/>
             </TabControl.Background>
             <TabItem Header="Order Details">
-                <Grid DataContext="{Binding SelectedPurchaseOrder}">
+                <Grid DataContext="{Binding SelectedSalesOrder}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.3*" />
                         <ColumnDefinition Width="*" />
@@ -99,27 +98,25 @@
                         <RowDefinition Height="6*" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="Order Number:" Margin="5, 0 , 10, 0" VerticalAlignment="Center" />
-                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="0" Text="{Binding purchaseOrderNo, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="0" Text="{Binding salesOrderNo, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                     <TextBlock Grid.Row="1" Text="Order Date:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" />
-                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="1" Text="{Binding purchaseOrderDate, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
-                    <TextBlock Grid.Row="2" Text="Supplier:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
-                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="2" Text="{Binding Supplier.supplierName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
-                    <TextBlock Grid.Row="3" Text="Delivery Addres:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding deliveryAddress, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" TextWrapping="Wrap" HorizontalAlignment="Left" Height="70"/>
+                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="1" Text="{Binding salesOrderDate, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                    <TextBlock Grid.Row="2" Text="Retailer:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
+                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="2" Text="{Binding Retailer.retailerName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Items:" Margin="5" VerticalAlignment="Center"/>
                     <ScrollViewer Grid.Row="5" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                        <DataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding PurchaseOrderLines}" AutoGenerateColumns="False" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False">
+                        <DataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding SalesOrderLines}" AutoGenerateColumns="False" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False">
                             <DataGrid.Columns>
-                                <!--<DataGridComboBoxColumn Header="Raw Material" ItemsSource="{Binding PurchaseOrderLines}"  DisplayMemberPath="rawMaterialsName"  SelectedValuePath="rawMaterialsID" />-->
-                                <DataGridTextColumn Header="Raw Material" Binding="{Binding RawMaterial.rawMaterialsName}" />
-                                <DataGridTextColumn Header="Price" Binding="{Binding purchaseOrderItemPrice}" />
-                                <DataGridTextColumn Header="Qty" Binding="{Binding purchaseOrderItemQty}" />
-                                <DataGridTextColumn Header="Subtotal" Binding="{Binding purchaseOrderLineSubtotal}" />
+                                <!--<DataGridComboBoxColumn Header="Product" ItemsSource="{Binding SalesOrderLines}"  DisplayMemberPath="productBrandName"  SelectedValuePath="productID" />-->
+                                <DataGridTextColumn Header="Product" Binding="{Binding Product.productBrandName}" />
+                                <DataGridTextColumn Header="Price" Binding="{Binding salesOrderItemPrice}" />
+                                <DataGridTextColumn Header="Qty" Binding="{Binding salesOrderItemQty}" />
+                                <DataGridTextColumn Header="Subtotal" Binding="{Binding salesOrderLinesSubtotal}" />
                                 <DataGridTemplateColumn Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Content="Delete"
-                                    Command="{Binding DataContext.DeletePurchaseOrderLineCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Command="{Binding DataContext.DeleteSalesOrderLineCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                     CommandParameter="{Binding}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -151,33 +148,31 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="Order Number:" Margin="5, 0 ,20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding NewPurchaseOrder.purchaseOrderNo, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding NewSalesOrder.salesOrderNo, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                         <TextBlock Grid.Row="1" Text="Order Date:" Margin="5, 0 ,20 , 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding NewPurchaseOrder.purchaseOrderDate, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
-                        <TextBlock Grid.Row="2" Text="Supplier:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Suppliers, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="supplierName" SelectedValuePath="supplierID" SelectedValue="{Binding NewPurchaseOrder.supplierID}"  Margin="5" Width="150" />
-                        <TextBlock Grid.Row="3" Text="Delivery Address:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NewPurchaseOrder.deliveryAddress, UpdateSourceTrigger=PropertyChanged}" Margin="5"  Height="70" Width="150"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding NewSalesOrder.salesOrderDate, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                        <TextBlock Grid.Row="2" Text="Retailer:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Retailers, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="retailerName" SelectedValuePath="retailerID" SelectedValue="{Binding NewSalesOrder.retailerID}"  Margin="5" Width="150" />
                         <TextBlock Grid.Row="4" Text="Items:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <ScrollViewer Grid.Row="5" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                            <DataGrid x:Name="newLineGrid" Grid.Row="5" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2" ItemsSource="{Binding NewPurchaseOrder.PurchaseOrderLines}" AutoGenerateColumns="False" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="True">
+                            <DataGrid x:Name="newLineGrid" Grid.Row="5" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2" ItemsSource="{Binding NewSalesOrder.SalesOrderLines}" AutoGenerateColumns="False" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="True">
                                 <DataGrid.Columns>
-                                    <!--<DataGridComboBoxColumn Header="Raw Material" ItemsSource="{Binding PurchaseOrderLines}"  DisplayMemberPath="rawMaterialsName"  SelectedValuePath="rawMaterialsID" />-->
-                                    <DataGridTemplateColumn Header="Raw Material" Width="Auto">
+                                    <!--<DataGridComboBoxColumn Header="Product" ItemsSource="{Binding SalesOrderLines}"  DisplayMemberPath="productBrandName"  SelectedValuePath="productID" />-->
+                                    <DataGridTemplateColumn Header="Product" Width="Auto">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged, Path=DataContext.RawMaterials}"  DisplayMemberPath="rawMaterialsName" SelectedValuePath="rawMaterialsID" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=DataContext.rawMaterialsID, UpdateSourceTrigger=PropertyChanged}" />
+                                                <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged, Path=DataContext.Products}"  DisplayMemberPath="productBrandName" SelectedValuePath="productID" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=DataContext.productID, UpdateSourceTrigger=PropertyChanged}" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="Price"  Binding="{Binding purchaseOrderItemPrice, UpdateSourceTrigger=PropertyChanged}" />
-                                    <DataGridTextColumn Header="Qty" Binding="{Binding purchaseOrderItemQty, UpdateSourceTrigger=PropertyChanged}" />
-                                    <DataGridTextColumn Header="Subtotal" Binding="{Binding purchaseOrderLineSubtotal, UpdateSourceTrigger=PropertyChanged}" />
+                                    <DataGridTextColumn Header="Price"  Binding="{Binding salesOrderItemPrice, UpdateSourceTrigger=PropertyChanged}" />
+                                    <DataGridTextColumn Header="Qty" Binding="{Binding salesOrderItemQty, UpdateSourceTrigger=PropertyChanged}" />
+                                    <DataGridTextColumn Header="Subtotal" Binding="{Binding salesOrderLinesSubtotal, UpdateSourceTrigger=PropertyChanged}" />
                                     <DataGridTemplateColumn Width="Auto">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button Content="Delete"
-                                    Command="{Binding DataContext.DeleteNewPurchaseOrderLineCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                    Command="{Binding DataContext.DeleteNewSalesOrderLineCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     CommandParameter="{Binding}" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -185,10 +180,10 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                         </ScrollViewer>
-                        <Button Grid.Row="8" Content="Add PurchaseOrder"
-                            Command="{Binding DataContext.AddPurchaseOrderCommand,
+                        <Button Grid.Row="8" Content="Add SalesOrder"
+                            Command="{Binding DataContext.AddSalesOrderCommand,
                                 RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"
-                                CommandParameter="{Binding NewPurchaseOrder}" Margin="5,5,5,5" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                CommandParameter="{Binding NewSalesOrder}" Margin="5,5,5,5" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </StackPanel>
             </TabItem>
@@ -202,7 +197,7 @@
                         <TextBlock Text="Order Number: " Margin="5,5,5,5" VerticalAlignment="Center"/>
                         <TextBox Name="txtSearchBox" Margin="5,5,5,5" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <Button Margin="5,5,5,5" Width="50" Content="Find"
-                                Command="{Binding DataContext.FindPurchaseOrdersCommand, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"
+                                Command="{Binding DataContext.FindSalesOrdersCommand, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"
                                 CommandParameter="{Binding Path=Text, ElementName=txtSearchBox}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </StackPanel>
                     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -210,14 +205,14 @@
                             <DataGrid Name="Foundgrid" ItemsSource="{Binding SearchResults}" AutoGenerateColumns="False"
                   Grid.Row="1" Margin="20, 0, 10, 10" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Order Number" Binding="{Binding purchaseOrderNo}" />
-                                    <DataGridTextColumn Header="Order Date" Binding="{Binding purchaseOrderDate}" />
-                                    <DataGridTextColumn Header="Supplier" Binding="{Binding Supplier.supplierName}" />
+                                    <DataGridTextColumn Header="Order Number" Binding="{Binding salesOrderNo}" />
+                                    <DataGridTextColumn Header="Order Date" Binding="{Binding salesOrderDate}" />
+                                    <DataGridTextColumn Header="Retailer" Binding="{Binding Retailer.retailerName}" />
                                     <DataGridTemplateColumn Width="Auto">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button Content="Delete"
-                                    Command="{Binding DataContext.DeletePurchaseOrderCommand,
+                                    Command="{Binding DataContext.DeleteSalesOrderCommand,
                                 RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     CommandParameter="{Binding}" />
                                             </DataTemplate>
@@ -244,27 +239,25 @@
                                                         <RowDefinition Height="*" />
                                                     </Grid.RowDefinitions>
                                                     <TextBlock Grid.Row="0" Text="Order Number:" Margin="5, 0 , 10, 0" VerticalAlignment="Center" />
-                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="0" Text="{Binding purchaseOrderNo, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="0" Text="{Binding salesOrderNo, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                                                     <TextBlock Grid.Row="1" Text="Order Date:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" />
-                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="1" Text="{Binding purchaseOrderDate, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
-                                                    <TextBlock Grid.Row="2" Text="Supplier:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
-                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="2" Text="{Binding Supplier.supplierName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
-                                                    <TextBlock Grid.Row="3" Text="Delivery Addres:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
-                                                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding deliveryAddress, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" TextWrapping="Wrap" HorizontalAlignment="Left" Height="70"/>
+                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="1" Text="{Binding salesOrderDate, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                                                    <TextBlock Grid.Row="2" Text="Retailer:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="2" Text="{Binding Retailer.retailerName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                                                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Items:" Margin="5" VerticalAlignment="Center"/>
                                                     <ScrollViewer Grid.Row="5" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                                                        <DataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding PurchaseOrderLines}" AutoGenerateColumns="False" RowDetailsVisibilityMode="Collapsed">
+                                                        <DataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding SalesOrderLines}" AutoGenerateColumns="False" RowDetailsVisibilityMode="Collapsed">
                                                             <DataGrid.Columns>
-                                                                <!--<DataGridComboBoxColumn Header="Raw Material" ItemsSource="{Binding PurchaseOrderLines}"  DisplayMemberPath="rawMaterialsName"  SelectedValuePath="rawMaterialsID" />-->
-                                                                <DataGridTextColumn Header="Raw Material" Binding="{Binding RawMaterial.rawMaterialsName}" />
-                                                                <DataGridTextColumn Header="Price" Binding="{Binding purchaseOrderItemPrice}" />
-                                                                <DataGridTextColumn Header="Qty" Binding="{Binding purchaseOrderItemQty}" />
-                                                                <DataGridTextColumn Header="Subtotal" Binding="{Binding purchaseOrderLineSubtotal}" />
+                                                                <!--<DataGridComboBoxColumn Header="Product" ItemsSource="{Binding SalesOrderLines}"  DisplayMemberPath="productBrandName"  SelectedValuePath="productID" />-->
+                                                                <DataGridTextColumn Header="Product" Binding="{Binding Product.productBrandName}" />
+                                                                <DataGridTextColumn Header="Price" Binding="{Binding salesOrderItemPrice}" />
+                                                                <DataGridTextColumn Header="Qty" Binding="{Binding salesOrderItemQty}" />
+                                                                <DataGridTextColumn Header="Subtotal" Binding="{Binding salesOrderLinesSubtotal}" />
                                                                 <DataGridTemplateColumn Width="Auto">
                                                                     <DataGridTemplateColumn.CellTemplate>
                                                                         <DataTemplate>
                                                                             <Button Content="Delete"
-                                                                            Command="{Binding DataContext.DeletePurchaseOrderLineCommand,
+                                                                            Command="{Binding DataContext.DeleteSalesOrderLineCommand,
                                                                             RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                                             CommandParameter="{Binding}" />
                                                                         </DataTemplate>
@@ -274,7 +267,7 @@
                                                         </DataGrid>
                                                     </ScrollViewer>
                                                     <Button Grid.Row="6" Content="Save Changes"
-                                                        Command="{Binding DataContext.UpdatePurchaseOrderCommand,
+                                                        Command="{Binding DataContext.UpdateSalesOrderCommand,
                                                         RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                                         CommandParameter="{Binding}" Margin="5,5,5,5" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Grid>
