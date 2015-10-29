@@ -30,6 +30,13 @@ namespace MrSparklyWPF.Employees
             set { SetProperty(ref _newEmployee, value); }
         }
 
+        private Employee _selectedEmployee;
+        public Employee SelectedEmployee
+        {
+            get { return _selectedEmployee; }
+            set { SetProperty(ref _selectedEmployee, value); }
+        }
+
         private ObservableCollection<Suburb> _suburbs;
         public ObservableCollection<Suburb> Suburbs
         {
@@ -77,12 +84,14 @@ namespace MrSparklyWPF.Employees
             UpdateEmployeeCommand = new RelayCommand<Employee>(onUpdateEmployee);
             AddEmployeeCommand = new RelayCommand<Employee>(onAddEmployee);
             FindEmployeesCommand = new RelayCommand<string>(onFindEmployees);
+            SelectEmployeeCommand = new RelayCommand<Employee>(onSelectEmployee);
         }
 
         public RelayCommand<Employee> DeleteEmployeeCommand { get; private set; }
         public RelayCommand<Employee> UpdateEmployeeCommand { get; private set; }
         public RelayCommand<Employee> AddEmployeeCommand { get; private set; }
         public RelayCommand<string> FindEmployeesCommand { get; private set; }
+        public RelayCommand<Employee> SelectEmployeeCommand { get; private set; }
 
         public void onDeleteEmployee(Employee emp)
         {            
@@ -139,6 +148,11 @@ namespace MrSparklyWPF.Employees
                       select e;
             SearchResults = new ObservableCollection<Employee>(queryResult.ToList());
             
+        }
+
+        public void onSelectEmployee(Employee emp)
+        {
+            SelectedEmployee = emp;
         }
 
         public ObservableCollection<Employee> UpdateEmployeesCollection(ObservableCollection<Employee> emps)

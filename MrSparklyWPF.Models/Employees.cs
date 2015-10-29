@@ -8,7 +8,7 @@ namespace MrSparklyWPF.Models
 {
     public partial class Employees : INotifyPropertyChanged
     {
-        public string employeeFirstName { get {return employeeFirstName;}
+        public string employeeFirstName { get; 
             set
             {
                 if (employeeFirstName != value) {

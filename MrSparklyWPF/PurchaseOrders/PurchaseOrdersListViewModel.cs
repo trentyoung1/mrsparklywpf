@@ -30,6 +30,13 @@ namespace MrSparklyWPF.PurchaseOrders
             set { SetProperty(ref _newPurchaseOrder, value); }
         }
 
+        private PurchaseOrderLine _newPurchaseOrderLine;
+        public PurchaseOrderLine NewPurchaseOrderLine
+        {
+            get { return _newPurchaseOrderLine; }
+            set { SetProperty(ref _newPurchaseOrderLine, value); }
+        }
+
         private PurchaseOrder _selectedPurchaseOrder;
         public PurchaseOrder SelectedPurchaseOrder
         {
@@ -101,6 +108,7 @@ namespace MrSparklyWPF.PurchaseOrders
             }
 
             _newPurchaseOrder = new PurchaseOrder();
+            _newPurchaseOrderLine = new PurchaseOrderLine();
             _newPurchaseOrder.PurchaseOrderLines = new ObservableCollection<PurchaseOrderLine>();
             _purchaseOrderLines = new ObservableCollection<PurchaseOrderLine>();
             _searchResults = new ObservableCollection<PurchaseOrder>();
@@ -109,6 +117,7 @@ namespace MrSparklyWPF.PurchaseOrders
             UpdatePurchaseOrderCommand = new RelayCommand<PurchaseOrder>(onUpdatePurchaseOrder);
             AddPurchaseOrderCommand = new RelayCommand<PurchaseOrder>(onAddPurchaseOrder);
             AddPurchaseOrderLineCommand = new RelayCommand<PurchaseOrderLine>(onAddPurchaseOrderLine);
+            UpdatePurchaseOrderLineCommand = new RelayCommand<PurchaseOrderLine>(onUpdatePurchaseOrderLine);
             SelectPurchaseOrderCommand = new RelayCommand<PurchaseOrder>(onSelectPurchaseOrder);
             FindPurchaseOrdersCommand = new RelayCommand<string>(onFindPurchaseOrders);
 
@@ -120,6 +129,7 @@ namespace MrSparklyWPF.PurchaseOrders
         public RelayCommand<PurchaseOrder> UpdatePurchaseOrderCommand { get; private set; }
         public RelayCommand<PurchaseOrder> AddPurchaseOrderCommand { get; private set; }
         public RelayCommand<PurchaseOrderLine> AddPurchaseOrderLineCommand { get; private set; }
+        public RelayCommand<PurchaseOrderLine> UpdatePurchaseOrderLineCommand { get; private set; }
         public RelayCommand<PurchaseOrder> SelectPurchaseOrderCommand { get; private set; }
         public RelayCommand<string> FindPurchaseOrdersCommand { get; private set; }
 
@@ -176,11 +186,21 @@ namespace MrSparklyWPF.PurchaseOrders
 
         public void onAddPurchaseOrderLine(PurchaseOrderLine line)
         {
-            var newPurchaseOrderLine = line;
+            var  newLine = line;
 
-            if (newPurchaseOrderLine != null)
-            NewPurchaseOrder.PurchaseOrderLines.Add(newPurchaseOrderLine);
+            if (newLine != null)
+            {
+                NewPurchaseOrderLine = newLine;
+            }
+            NewPurchaseOrder.PurchaseOrderLines.Add(NewPurchaseOrderLine);
         }
+
+         public void onUpdatePurchaseOrderLine(PurchaseOrderLine line)
+         {
+             var newPurchaseOrderLine = line;
+             if (newPurchaseOrderLine != null)
+             NewPurchaseOrder.PurchaseOrderLines.Add(newPurchaseOrderLine);
+         }
 
         public void onSelectPurchaseOrder(PurchaseOrder ord)
         {

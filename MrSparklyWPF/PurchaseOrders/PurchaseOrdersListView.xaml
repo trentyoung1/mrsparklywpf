@@ -47,7 +47,7 @@
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionColorKey}}"/>
                 </ScrollViewer.Background>
                 <StackPanel Grid.Row="1">
-                    <DataGrid x:Name="PurchaseOrdersgrid" ItemsSource="{Binding PurchaseOrders}" AutoGenerateColumns="False"
+                    <DataGrid x:Name="PurchaseOrdersgrid" ItemsSource="{Binding PurchaseOrders}" AutoGenerateColumns="False" IsReadOnly="True"
                   Grid.Row="1" Margin="10,20,10,0" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False" GridLinesVisibility="None" AlternationCount="1" BorderThickness="0" HorizontalAlignment="Center" Padding="0" ColumnWidth="100">
                         <DataGrid.AlternatingRowBackground>
                             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientActiveCaptionColorKey}}"/>
@@ -103,12 +103,12 @@
                     <TextBlock Grid.Row="1" Text="Order Date:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" />
                     <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="1" Text="{Binding purchaseOrderDate, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                     <TextBlock Grid.Row="2" Text="Supplier:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
-                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="2" Text="{Binding Supplier.supplierName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
-                    <TextBlock Grid.Row="3" Text="Delivery Addres:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
+                    <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged, Path=DataContext.Suppliers}"  DisplayMemberPath="supplierName" SelectedValuePath="supplierID" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=DataContext.supplierID, UpdateSourceTrigger=PropertyChanged}"  Width="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="3" Text="Delivery Address:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
                     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding deliveryAddress, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" TextWrapping="Wrap" HorizontalAlignment="Left" Height="70"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Items:" Margin="5" VerticalAlignment="Center"/>
                     <ScrollViewer Grid.Row="5" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                        <DataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding PurchaseOrderLines}" AutoGenerateColumns="False" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False">
+                        <DataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding PurchaseOrderLines}" AutoGenerateColumns="False" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="True">
                             <DataGrid.Columns>
                                 <!--<DataGridComboBoxColumn Header="Raw Material" ItemsSource="{Binding PurchaseOrderLines}"  DisplayMemberPath="rawMaterialsName"  SelectedValuePath="rawMaterialsID" />-->
                                 <DataGridTextColumn Header="Raw Material" Binding="{Binding RawMaterial.rawMaterialsName}" />
@@ -166,11 +166,11 @@
                                     <DataGridTemplateColumn Header="Raw Material" Width="Auto">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged, Path=DataContext.RawMaterials}"  DisplayMemberPath="rawMaterialsName" SelectedValuePath="rawMaterialsID" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=DataContext.rawMaterialsID, UpdateSourceTrigger=PropertyChanged}" />
+                                                <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.RawMaterials}"  DisplayMemberPath="rawMaterialsName" SelectedValuePath="rawMaterialsID" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=DataContext.rawMaterialsID, UpdateSourceTrigger=PropertyChanged}" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="Price"  Binding="{Binding purchaseOrderItemPrice, UpdateSourceTrigger=PropertyChanged}" />
+                                    <DataGridTextColumn Header="Price" Binding="{Binding purchaseOrderItemPrice, UpdateSourceTrigger=PropertyChanged}" />
                                     <DataGridTextColumn Header="Qty" Binding="{Binding purchaseOrderItemQty, UpdateSourceTrigger=PropertyChanged}" />
                                     <DataGridTextColumn Header="Subtotal" Binding="{Binding purchaseOrderLineSubtotal, UpdateSourceTrigger=PropertyChanged}" />
                                     <DataGridTemplateColumn Width="Auto">
@@ -207,7 +207,7 @@
                     </StackPanel>
                     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                         <StackPanel Grid.Row="1">
-                            <DataGrid Name="Foundgrid" ItemsSource="{Binding SearchResults}" AutoGenerateColumns="False"
+                            <DataGrid Name="Foundgrid" ItemsSource="{Binding SearchResults}" AutoGenerateColumns="False" IsReadOnly="True"
                   Grid.Row="1" Margin="20, 0, 10, 10" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Order Number" Binding="{Binding purchaseOrderNo}" />
@@ -248,12 +248,12 @@
                                                     <TextBlock Grid.Row="1" Text="Order Date:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" />
                                                     <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="1" Text="{Binding purchaseOrderDate, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                                                     <TextBlock Grid.Row="2" Text="Supplier:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
-                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Grid.Row="2" Text="{Binding Supplier.supplierName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
-                                                    <TextBlock Grid.Row="3" Text="Delivery Addres:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
+                                                    <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged, Path=DataContext.Suppliers}"  DisplayMemberPath="supplierName" SelectedValuePath="supplierID" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=DataContext.supplierID, UpdateSourceTrigger=PropertyChanged}"  Width="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                                    <TextBlock Grid.Row="3" Text="Delivery Address:" VerticalAlignment="Center" Margin="5, 0 , 20, 0" />
                                                     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding deliveryAddress, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" TextWrapping="Wrap" HorizontalAlignment="Left" Height="70"/>
                                                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Items:" Margin="5" VerticalAlignment="Center"/>
                                                     <ScrollViewer Grid.Row="5" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                                                        <DataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding PurchaseOrderLines}" AutoGenerateColumns="False" RowDetailsVisibilityMode="Collapsed">
+                                                        <DataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding PurchaseOrderLines}" AutoGenerateColumns="False" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="True">
                                                             <DataGrid.Columns>
                                                                 <!--<DataGridComboBoxColumn Header="Raw Material" ItemsSource="{Binding PurchaseOrderLines}"  DisplayMemberPath="rawMaterialsName"  SelectedValuePath="rawMaterialsID" />-->
                                                                 <DataGridTextColumn Header="Raw Material" Binding="{Binding RawMaterial.rawMaterialsName}" />

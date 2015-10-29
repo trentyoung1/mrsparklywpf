@@ -30,6 +30,13 @@ namespace MrSparklyWPF.Suppliers
             set { SetProperty(ref _newSupplier, value); }
         }
 
+        private ObservableCollection<Suburb> _suburbs;
+        public ObservableCollection<Suburb> Suburbs
+        {
+            get { return _suburbs; }
+            set { SetProperty(ref _suburbs, value); }
+        }
+
         private ObservableCollection<Supplier> _searchResults;
         public ObservableCollection<Supplier> SearchResults
         {
@@ -48,6 +55,15 @@ namespace MrSparklyWPF.Suppliers
             {
                 var suppliers = db.Suppliers.Include(s => s.Suburb);
                 Suppliers = new ObservableCollection<Supplier>(suppliers.ToList());
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message.ToString());
+            }
+            try
+            {
+                var suburbs = db.Suburbs.ToList();
+                Suburbs = new ObservableCollection<Suburb>(suburbs);
             }
             catch (Exception ex)
             {

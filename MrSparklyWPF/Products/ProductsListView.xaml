@@ -47,15 +47,15 @@
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionColorKey}}"/>
                 </ScrollViewer.Background>
                 <StackPanel Grid.Row="1" Margin="0">
-                    <DataGrid x:Name="Productsgrid" ItemsSource="{Binding Products}" AutoGenerateColumns="False"
+                    <DataGrid x:Name="Productsgrid" ItemsSource="{Binding Products}" AutoGenerateColumns="False" IsReadOnly="True"
                   Grid.Row="1" Margin="10,20,10,0" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False" GridLinesVisibility="None" AlternationCount="1" BorderThickness="0" HorizontalAlignment="Center" Padding="0" ColumnWidth="100">
                         <DataGrid.AlternatingRowBackground>
                             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientActiveCaptionColorKey}}"/>
                         </DataGrid.AlternatingRowBackground>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Brand Name" Binding="{Binding productBrandName}" />
-                            <DataGridTextColumn Header="Cost Price" Binding="{Binding productCostPrice}" />
-                            <DataGridTextColumn Header="Retail Price" Binding="{Binding productRetailPrice}" />
+                            <DataGridTextColumn Header="Cost Price" Binding="{Binding productCostPrice, StringFormat=C}" />
+                            <DataGridTextColumn Header="Retail Price" Binding="{Binding productRetailPrice, StringFormat=C}" />
                             <DataGridTextColumn Header="Quantity" Binding="{Binding productQty}" />
                             <DataGridTemplateColumn Width="Auto">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -86,9 +86,9 @@
                                             <TextBlock Grid.Row="0" Text="Brand Name:" Margin="5, 0 , 10, 0" VerticalAlignment="Center" />
                                             <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" Text="{Binding productBrandName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                                             <TextBlock Grid.Row="1" Text="Cost Price:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" />
-                                            <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Text="{Binding productCostPrice, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Text="{Binding productCostPrice, StringFormat=C, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                                             <TextBlock Grid.Row="2" Text="Retail Price:" Margin="5, 0 , 20, 0" />
-                                            <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Text="{Binding productRetailPrice, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                                            <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Text="{Binding productRetailPrice, StringFormat=C, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                                             <TextBlock Grid.Row="3" Text="Quantity:" Margin="5, 0 , 20, 0" />
                                             <TextBox HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Text="{Binding productQty, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                                             <Button Grid.Row="4" Content="Save Changes"
@@ -130,9 +130,9 @@
                         <TextBlock Grid.Row="0" Text="Brand Name:" Margin="5, 0 ,20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding NewProduct.productBrandName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                         <TextBlock Grid.Row="1" Text="Cost Price:" Margin="5, 0 ,20 , 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding NewProduct.productCostPrice, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding NewProduct.productCostPrice, StringFormat=C, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                         <TextBlock Grid.Row="2" Text="Retail Price:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding NewProduct.productRetailPrice, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding NewProduct.productRetailPrice, StringFormat=C, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                         <TextBlock Grid.Row="3" Text="Quantity:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NewProduct.productQty, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                         <Button Grid.Row="4" Content="Add Product"
@@ -157,12 +157,12 @@
                     </StackPanel>
                     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                         <StackPanel Grid.Row="1">
-                            <DataGrid Name="Foundgrid" ItemsSource="{Binding SearchResults}" AutoGenerateColumns="False"
+                            <DataGrid Name="Foundgrid" ItemsSource="{Binding SearchResults}" AutoGenerateColumns="False" IsReadOnly="True"
                   Grid.Row="1" Margin="20, 0, 10, 10" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Brand Name" Binding="{Binding productBrandName}" />
-                                    <DataGridTextColumn Header="Cost Price" Binding="{Binding productCostPrice}" />
-                                    <DataGridTextColumn Header="Retail Price" Binding="{Binding productRetailPrice}" />
+                                    <DataGridTextColumn Header="Cost Price" Binding="{Binding productCostPrice, StringFormat=C}" />
+                                    <DataGridTextColumn Header="Retail Price" Binding="{Binding productRetailPrice, StringFormat=C}" />
                                     <DataGridTextColumn Header="Quantity" Binding="{Binding productQty}" />
                                     <DataGridTemplateColumn Width="Auto">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -194,9 +194,9 @@
                                                     <TextBlock Grid.Row="0" Text="Brand Name:" Margin="5, 0 , 10, 0" VerticalAlignment="Center" />
                                                     <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" Text="{Binding productBrandName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                                                     <TextBlock Grid.Row="1" Text="Cost Price:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" />
-                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Text="{Binding productCostPrice, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Text="{Binding productCostPrice, StringFormat=C, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                                                     <TextBlock Grid.Row="2" Text="Retail Price:" Margin="5, 0 , 20, 0" />
-                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Text="{Binding productRetailPrice, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
+                                                    <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Text="{Binding productRetailPrice, StringFormat=C, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                                                     <TextBlock Grid.Row="3" Text="Quantity:" Margin="5, 0 , 20, 0" />
                                                     <TextBox HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Text="{Binding productQty, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                                                     <Button Grid.Row="4" Content="Save Changes"

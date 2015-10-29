@@ -47,7 +47,7 @@
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionColorKey}}"/>
                 </ScrollViewer.Background>
                 <StackPanel Grid.Row="1">
-                    <DataGrid x:Name="Retailersgrid" ItemsSource="{Binding Retailers}" AutoGenerateColumns="False"
+                    <DataGrid x:Name="Retailersgrid" ItemsSource="{Binding Retailers}" AutoGenerateColumns="False" IsReadOnly="True"
                   Grid.Row="1" Margin="10,20,10,0" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False" GridLinesVisibility="None" AlternationCount="1" BorderThickness="0" HorizontalAlignment="Center" Padding="0" ColumnWidth="100">
                         <DataGrid.AlternatingRowBackground>
                             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientActiveCaptionColorKey}}"/>
@@ -98,7 +98,7 @@
                                             <TextBlock Grid.Row="2" Text="Phone:" Margin="5, 0 , 20, 0" />
                                             <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Text="{Binding retailerPhone, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                                             <TextBlock Grid.Row="3" Text="Assigned To:" Margin="5, 0 , 20, 0" />
-                                            <TextBox HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Text="{Binding Employee.employeeFirstName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                            <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged, Path=DataContext.Employees}"  DisplayMemberPath="employeeFirstName" SelectedValuePath="employeeID" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=DataContext.employeeID, UpdateSourceTrigger=PropertyChanged}"  Width="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                             <TextBlock Grid.Row="4" Text="Email:" Margin="5" />
                                             <TextBox HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Text="{Binding retailerEmail, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                                             <TextBlock Grid.Row="5" Text="Mobile:" Margin="5" />
@@ -108,11 +108,7 @@
                                             <TextBlock Grid.Row="7" Text="Address:" Margin="5" />
                                             <TextBox HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" Text="{Binding retailerStreet, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" TextWrapping="Wrap"/>
                                             <TextBlock Grid.Row="8" Text="Suburb:" Margin="5" />
-                                            <TextBox HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Text="{Binding Suburb.suburb1, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
-                                            <TextBlock Grid.Row="9" Text="State:" Margin="5" />
-                                            <TextBox HorizontalAlignment="Left" Grid.Row="9" Grid.Column="1" Text="{Binding Suburb.state, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
-                                            <TextBlock Grid.Row="10" Text="Post Code:" Margin="5" />
-                                            <TextBox HorizontalAlignment="Left" Grid.Row="10" Grid.Column="1" Text="{Binding Suburb.zip, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                            <ComboBox Grid.Row="8" Grid.Column="1" ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged, Path=DataContext.Suburbs}"  DisplayMemberPath="suburb1" SelectedValuePath="suburbID" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=DataContext.suburbID, UpdateSourceTrigger=PropertyChanged}"  Width="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                             <Button Grid.Row="11" Content="Save Changes"
                                     Command="{Binding DataContext.UpdateRetailerCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     CommandParameter="{Binding}" Margin="5,5,5,5" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -163,7 +159,7 @@
                         <TextBlock Grid.Row="2" Text="Phone:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding NewRetailer.retailerPhone, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                         <TextBlock Grid.Row="3" Text="Assigned To:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NewRetailer.Employee.employeeFirstName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                        <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Employees}"  DisplayMemberPath="employeeFirstName" SelectedValuePath="employeeID" SelectedValue="{Binding NewRetailer.employeeID, UpdateSourceTrigger=PropertyChanged}"  Width="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         <TextBlock Grid.Row="4" Text="Email:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding NewRetailer.retailerEmail, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                         <TextBlock Grid.Row="5" Text="Mobile:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -173,11 +169,7 @@
                         <TextBlock Grid.Row="7" Text="Address:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding NewRetailer.retailerStreet, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" TextWrapping="Wrap"/>
                         <TextBlock Grid.Row="8" Text="Suburb:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding NewRetailer.Suburb.suburb1, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
-                        <TextBlock Grid.Row="9" Text="State:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding NewRetailer.Suburb.state, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
-                        <TextBlock Grid.Row="10" Text="Post Code:" Margin="5, 0 , 20, 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding NewRetailer.Suburb.zip, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                        <ComboBox Grid.Row="8" Grid.Column="1" ItemsSource="{Binding Suburbs}" DisplayMemberPath="suburb1"  SelectedValuePath="suburbID" SelectedValue="{Binding Path=NewRetailer.suburbID}" Margin="5" Width="150"/>
                         <Button Grid.Row="11" Content="Add Retailer"
                             Command="{Binding DataContext.AddRetailerCommand,
                                 RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"
@@ -200,7 +192,7 @@
                     </StackPanel>
                     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                         <StackPanel Grid.Row="1">
-                            <DataGrid Name="Foundgrid" ItemsSource="{Binding SearchResults}" AutoGenerateColumns="False"
+                            <DataGrid Name="Foundgrid" ItemsSource="{Binding SearchResults}" AutoGenerateColumns="False" IsReadOnly="True"
                   Grid.Row="1" Margin="20, 0, 10, 10" RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Retailer Name" Binding="{Binding retailerName}" />
@@ -248,7 +240,7 @@
                                                     <TextBlock Grid.Row="2" Text="Phone:" Margin="5, 0 , 20, 0" />
                                                     <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Text="{Binding retailerPhone, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" />
                                                     <TextBlock Grid.Row="3" Text="Assigned To:" Margin="5, 0 , 20, 0" />
-                                                    <TextBox HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Text="{Binding Employee.employeeFirstName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                                    <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged, Path=DataContext.Employees}"  DisplayMemberPath="employeeFirstName" SelectedValuePath="employeeID" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=DataContext.employeeID, UpdateSourceTrigger=PropertyChanged}"  Width="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                                     <TextBlock Grid.Row="4" Text="Email:" Margin="5" />
                                                     <TextBox HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Text="{Binding retailerEmail, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
                                                     <TextBlock Grid.Row="5" Text="Mobile:" Margin="5" />
@@ -258,11 +250,7 @@
                                                     <TextBlock Grid.Row="7" Text="Address:" Margin="5" />
                                                     <TextBox HorizontalAlignment="Left" Grid.Row="7" Grid.Column="1" Text="{Binding retailerStreet, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" TextWrapping="Wrap"/>
                                                     <TextBlock Grid.Row="8" Text="Suburb:" Margin="5" />
-                                                    <TextBox HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Text="{Binding Suburb.suburb1, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
-                                                    <TextBlock Grid.Row="9" Text="State:" Margin="5" />
-                                                    <TextBox HorizontalAlignment="Left" Grid.Row="9" Grid.Column="1" Text="{Binding Suburb.state, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
-                                                    <TextBlock Grid.Row="10" Text="Post Code:" Margin="5" />
-                                                    <TextBox HorizontalAlignment="Left" Grid.Row="10" Grid.Column="1" Text="{Binding Suburb.zip, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150"/>
+                                                    <ComboBox Grid.Row="8" Grid.Column="1" ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged, Path=DataContext.Suburbs}"  DisplayMemberPath="suburb1" SelectedValuePath="suburbID" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=DataContext.suburbID, UpdateSourceTrigger=PropertyChanged}"  Width="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                                     <Button Grid.Row="11" Content="Save Changes"
                                     Command="{Binding DataContext.UpdateRetailerCommand,
                                 RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
